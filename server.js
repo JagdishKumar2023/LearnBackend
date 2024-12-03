@@ -24,7 +24,6 @@ app.post("/register", (req, res) => {
   const { name, email, password } = req.body;
 
   // Check if user already exists
-
   registerModel
     .findOne({ email })
     .then((user) => {
@@ -34,7 +33,6 @@ app.post("/register", (req, res) => {
       }
 
       // Save the user without password hashing
-
       registerModel
         .create({ name, email, password })
         .then((result) => {
