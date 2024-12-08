@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const registerModel = require("./models/Register");
+const RegisterModel = require("./models/Register");
 
 const app = express();
 app.use(cors());
@@ -20,12 +20,11 @@ mongoose
 
 // Register Route
 
-app.post("/register", (req, res) => {
+app.post("/formdata", (req, res) => {
   const { name, email, password } = req.body;
 
   // Check if user already exists
-  registerModel
-    .findOne({ email })
+  RegisterModel.findOne({ email })
     .then((user) => {
       if (user) {
         res.json({ message: "User already exists!" });
@@ -33,8 +32,7 @@ app.post("/register", (req, res) => {
       }
 
       // Save the user without password hashing
-      registerModel
-        .create({ name, email, password })
+      RegisterModel.create({ name, email, password })
         .then((result) => {
           res.json({ message: "Account created successfully", user: result });
         })
@@ -48,6 +46,8 @@ app.post("/register", (req, res) => {
 });
 
 // Start the server
-app.listen(4001, () => {
-  console.log("Server is running on port 4001");
+
+const PORT = 4001;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
